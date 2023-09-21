@@ -6,10 +6,11 @@ import {
   useSensors,
   useDraggable,
   useDroppable,
+  closestCenter,
 } from "@dnd-kit/core";
 
 const ImageGallery = () => {
-  const [imageData] = useState([
+  const [imageData, setImageData] = useState([
     // Your image data objects
 
     {
@@ -102,6 +103,22 @@ const ImageGallery = () => {
     setFilteredData(filteredImages);
   };
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active && over) {
+      const oldIndex = active.id;
+      const newIndex = over.id;
+
+      const updatedImageData = [...filteredData];
+      const [movedItem] = updatedImageData.splice(oldIndex, 1);
+      updatedImageData.splice(newIndex, 0, movedItem);
+
+      setImageData(updatedImageData);
+      setFilteredData(updatedImageData);
+    }
+  };
+
   return (
     <div>
       <section className="section-search center">
@@ -119,7 +136,7 @@ const ImageGallery = () => {
       <div className="section-gallery center">
         <p className="drag-text">Drag and Drop images to your preference</p>
 
-        <DndContext sensors={sensors}>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <ul className="gallery">
             {filteredData.map((imageInfo, index) => (
               <ImageItem
@@ -138,11 +155,11 @@ const ImageGallery = () => {
 const ImageItem = ({ imageInfo, index }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
-      id: imageInfo.id.toString(),
+      id: index.toString(),
     });
 
   const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
-    id: "gallery",
+    id: index.toString(),
   });
 
   return (
