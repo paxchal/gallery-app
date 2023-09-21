@@ -5,6 +5,7 @@ import {
   useSensor,
   useSensors,
   useDraggable,
+  useDroppable,
 } from "@dnd-kit/core";
 
 const ImageGallery = () => {
@@ -140,13 +141,22 @@ const ImageItem = ({ imageInfo, index }) => {
       id: imageInfo.id.toString(),
     });
 
+  const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
+    id: "gallery",
+  });
+
   return (
     <div
-      ref={setNodeRef}
+      ref={(node) => {
+        setNodeRef(node);
+        setDroppableNodeRef(node);
+      }}
       {...attributes}
       {...listeners}
       style={{ transform }}
-      className={`gallery-item ${isDragging ? "dragging" : ""}`}
+      className={`gallery-item ${isDragging ? "dragging" : ""} ${
+        isOver ? "over" : ""
+      }`}
     >
       <img
         className="gallery-image"
