@@ -6,7 +6,6 @@ import {
   useSensors,
   useDraggable,
   useDroppable,
-  closestCenter,
 } from "@dnd-kit/core";
 
 const ImageGallery = () => {
