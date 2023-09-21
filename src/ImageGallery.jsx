@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const ImageGallery = () => {
   const [imageData] = useState([
     // Example image data, you can add more image objects here
+    // ...
     {
       id: "1",
 
@@ -91,29 +92,32 @@ const ImageGallery = () => {
       },
       alt_description: "people, woman, human",
     },
-    // Add more image objects as needed
   ]);
-  //const [loading, setLoading] = useState(false);  Loading state
-  const [searchInput, setSearchInput] = useState(""); // Search input
-  const [filteredData, setFilteredData] = useState(imageData); // Filtered images
+
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredData, setFilteredData] = useState(imageData);
 
   // Handle drag-and-drop reordering
   const onDragEnd = (result) => {
-    if (!result.destination) return; // Dropped outside the list
+    if (!result.destination) return; // Dropped outside the grid
 
+    const sourceIndex = result.source.index;
+    const destinationIndex = result.destination.index;
+
+    // Swap positions of the two images
     const reorderedImages = Array.from(filteredData);
-    const [reorderedItem] = reorderedImages.splice(result.source.index, 1);
-    reorderedImages.splice(result.destination.index, 0, reorderedItem);
+    [reorderedImages[sourceIndex], reorderedImages[destinationIndex]] = [
+      reorderedImages[destinationIndex],
+      reorderedImages[sourceIndex],
+    ];
 
     setFilteredData(reorderedImages);
   };
 
-  // Handle search input change
   const handleSearchInputChange = (event) => {
     const inputValue = event.target.value;
     setSearchInput(inputValue);
 
-    // Filter images based on alt descriptions
     const filteredImages = imageData.filter((imageInfo) =>
       imageInfo.alt_description.toLowerCase().includes(inputValue.toLowerCase())
     );
