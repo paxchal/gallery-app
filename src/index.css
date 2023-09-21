@@ -152,6 +152,11 @@ h1 {
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
 }
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
 .gallery-image {
   width: 100%;
 }

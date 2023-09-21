@@ -126,7 +126,11 @@ const ImageGallery = () => {
 
       <div className="section-gallery center">
         <DragDropContext onDragEnd={onDragEnd}>
-          <Draggable droppableId="image-gallery" direction="horizontal">
+          <Droppable
+            droppableId="image-gallery"
+            direction="horizontal"
+            className="image-gallery"
+          >
             {(provided) => (
               <ul
                 ref={provided.innerRef}
@@ -134,7 +138,7 @@ const ImageGallery = () => {
                 className="gallery"
               >
                 {filteredData.map((imageInfo, index) => (
-                  <Droppable
+                  <Draggable
                     key={imageInfo.id}
                     draggableId={imageInfo.id.toString()}
                     index={index}
@@ -153,12 +157,12 @@ const ImageGallery = () => {
                         />
                       </div>
                     )}
-                  </Droppable>
+                  </Draggable>
                 ))}
                 {provided.placeholder}
               </ul>
             )}
-          </Draggable>
+          </Droppable>
         </DragDropContext>
       </div>
     </div>
