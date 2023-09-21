@@ -134,43 +134,41 @@ const ImageGallery = () => {
         </div>
       </section>
 
-      <div className="section-gallery center">
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="image-gallery" direction="horizontal">
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="gallery"
-              >
-                {filteredData.map((imageInfo, index) => (
-                  <Draggable
-                    key={imageInfo.id}
-                    draggableId={imageInfo.id.toString()}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="gallery-item"
-                      >
-                        <img
-                          className="gallery-image"
-                          src={imageInfo.urls.regular}
-                          alt={imageInfo.alt_description}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </div>
+      <DragDropContext onDragEnd={onDragEnd} className="section-gallery center">
+        <Droppable droppableId="image-gallery" direction="horizontal">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="gallery"
+            >
+              {filteredData.map((imageInfo, index) => (
+                <Draggable
+                  key={imageInfo.id}
+                  draggableId={imageInfo.id.toString()}
+                  index={index}
+                >
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      className="gallery-item"
+                    >
+                      <img
+                        className="gallery-image"
+                        src={imageInfo.urls.regular}
+                        alt={imageInfo.alt_description}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };
