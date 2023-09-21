@@ -78,20 +78,6 @@ const ImageGallery = () => {
       },
       alt_description: "drone, tech",
     },
-    {
-      id: "11",
-      urls: {
-        regular: "https://source.unsplash.com/Bnl5yt3SNsM", // URL to your image
-      },
-      alt_description: "computer , tech ",
-    },
-    {
-      id: "12",
-      urls: {
-        regular: "https://source.unsplash.com/Zpzf7TLj_gA", // URL to your image
-      },
-      alt_description: "people, woman, human",
-    },
   ]);
 
   const [searchInput, setSearchInput] = useState("");
@@ -142,7 +128,7 @@ const ImageGallery = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="image-gallery" direction="horizontal">
             {(provided) => (
-              <div
+              <ul
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 className="gallery"
@@ -170,7 +156,7 @@ const ImageGallery = () => {
                   </Draggable>
                 ))}
                 {provided.placeholder}
-              </div>
+              </ul>
             )}
           </Droppable>
         </DragDropContext>
