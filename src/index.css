@@ -45,6 +45,14 @@ h1 {
 
 /* SEARCH REGION*/
 
+.drag-text {
+  color: #553c7e;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 .section-search {
   margin: 3rem 0 2rem 0;
   display: flex;
@@ -77,7 +85,18 @@ h1 {
   background-color: #ffffff;
   flex: 1;
   min-height: 30rem;
-  padding-top: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 9.6rem;
+  height: 100vh;
+}
+
+.sign-out-btn {
+  border: none;
+  color: #dfdfdf;
+  background: transparent;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /*  LOGIN PAGE*/
@@ -97,6 +116,8 @@ h1 {
   flex: 1;
   max-width: 25rem;
   gap: 2rem;
+
+  padding: 0 1.4rem 0 1.4rem;
 }
 
 .login-header {
@@ -159,4 +180,56 @@ h1 {
 }
 .gallery-image {
   width: 100%;
+}
+
+/*MEDIA QUERY*/
+
+@media (max-width: 800px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  .image-gallery {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .image-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .image-gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .center {
+    padding: 0 3.4rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .image-gallery {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .center {
+    padding: 0 3rem;
+  }
 }

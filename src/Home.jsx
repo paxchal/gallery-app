@@ -15,7 +15,9 @@ function Home() {
     <div className="Home">
       <section className="section-header center">
         <h1>My Gallery</h1>
-        <button onClick={handleClick}>Sign out</button>
+        <button onClick={handleClick} className="sign-out-btn">
+          Sign out
+        </button>
       </section>
 
       <div>

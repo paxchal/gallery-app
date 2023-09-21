@@ -117,7 +117,7 @@ const ImageGallery = () => {
           <input
             type="text"
             className="search-input"
-            placeholder="Search your gallery by alt description"
+            placeholder="Search your gallery"
             value={searchInput}
             onChange={handleSearchInputChange}
           />
@@ -125,6 +125,8 @@ const ImageGallery = () => {
       </section>
 
       <div className="section-gallery center">
+        <p className="drag-text">Drag and Drop images to your preference</p>
+
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
             droppableId="image-gallery"
