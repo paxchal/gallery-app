@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  useDraggable,
+} from "@dnd-kit/core";
 
 const ImageGallery = () => {
   const [imageData] = useState([
-    // Example image data, you can add more image objects here
-    // ...
+    // Your image data objects
+
     {
       id: "1",
 
@@ -83,22 +89,7 @@ const ImageGallery = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filteredData, setFilteredData] = useState(imageData);
 
-  // Handle drag-and-drop reordering
-  const onDragEnd = (result) => {
-    if (!result.destination) return; // Dropped outside the grid
-
-    const sourceIndex = result.source.index;
-    const destinationIndex = result.destination.index;
-
-    // Swap positions of the two images
-    const reorderedImages = Array.from(filteredData);
-    [reorderedImages[sourceIndex], reorderedImages[destinationIndex]] = [
-      reorderedImages[destinationIndex],
-      reorderedImages[sourceIndex],
-    ];
-
-    setFilteredData(reorderedImages);
-  };
+  const sensors = useSensors(useSensor(PointerSensor));
 
   const handleSearchInputChange = (event) => {
     const inputValue = event.target.value;
@@ -127,46 +118,41 @@ const ImageGallery = () => {
       <div className="section-gallery center">
         <p className="drag-text">Drag and Drop images to your preference</p>
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable
-            droppableId="image-gallery"
-            direction="horizontal"
-            className="image-gallery vertical-gallery"
-          >
-            {(provided) => (
-              <ul
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className="gallery"
-              >
-                {filteredData.map((imageInfo, index) => (
-                  <Draggable
-                    key={imageInfo.id}
-                    draggableId={imageInfo.id.toString()}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="gallery-item"
-                      >
-                        <img
-                          className="gallery-image"
-                          src={imageInfo.urls.regular}
-                          alt={imageInfo.alt_description}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <DndContext sensors={sensors}>
+          <ul className="gallery">
+            {filteredData.map((imageInfo, index) => (
+              <ImageItem
+                key={imageInfo.id}
+                imageInfo={imageInfo}
+                index={index}
+              />
+            ))}
+          </ul>
+        </DndContext>
       </div>
+    </div>
+  );
+};
+
+const ImageItem = ({ imageInfo, index }) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: imageInfo.id.toString(),
+    });
+
+  return (
+    <div
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={{ transform }}
+      className={`gallery-item ${isDragging ? "dragging" : ""}`}
+    >
+      <img
+        className="gallery-image"
+        src={imageInfo.urls.regular}
+        alt={imageInfo.alt_description}
+      />
     </div>
   );
 };
