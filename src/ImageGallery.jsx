@@ -166,15 +166,19 @@ const ImageItem = ({ imageInfo, index }) => {
 
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-  const handleMove = (event) => {
-    if (isDragging) {
-      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
-      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
-      setCursorPosition({ x: clientX, y: clientY });
-    }
-  };
-
   React.useEffect(() => {
+    const handleMove = (event) => {
+      if (isDragging) {
+        const clientX = event.touches
+          ? event.touches[0].clientX
+          : event.clientX;
+        const clientY = event.touches
+          ? event.touches[0].clientY
+          : event.clientY;
+        setCursorPosition({ x: clientX, y: clientY });
+      }
+    };
+
     window.addEventListener("mousemove", handleMove);
     window.addEventListener("touchmove", handleMove); // Handle touch move
 
@@ -182,7 +186,7 @@ const ImageItem = ({ imageInfo, index }) => {
       window.removeEventListener("mousemove", handleMove);
       window.removeEventListener("touchmove", handleMove); // Remove touch move listener
     };
-  }, [handleMove, isDragging]);
+  }, [isDragging]);
 
   return (
     <div
