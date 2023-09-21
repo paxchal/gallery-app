@@ -27,6 +27,11 @@ function Login() {
   return (
     <div className="Login-page">
       <div className="login-cnt">
+        <h1>Image gallery</h1>
+        <h2>
+          Welcome to <strong>Image Gallery</strong>, here you can view images,
+          drag and drop them to your preference.
+        </h2>
         <p className="login-header">Login</p>
         <form onSubmit={(e) => handleSubmit(e)}>
           <label className="login-label" for="email">
