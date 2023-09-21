@@ -162,11 +162,14 @@ const ImageItem = ({ imageInfo, index }) => {
 
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (event) => {
-    if (isDragging) {
-      setCursorPosition({ x: event.clientX, y: event.clientY });
-    }
-  };
+  const handleMouseMove = React.useCallback(
+    (event) => {
+      if (isDragging) {
+        setCursorPosition({ x: event.clientX, y: event.clientY });
+      }
+    },
+    [isDragging]
+  );
 
   React.useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -174,7 +177,7 @@ const ImageItem = ({ imageInfo, index }) => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isDragging]);
+  }, [handleMouseMove]);
 
   return (
     <div
