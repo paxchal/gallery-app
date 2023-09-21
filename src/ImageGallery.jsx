@@ -7,7 +7,6 @@ import {
   useDraggable,
   useDroppable,
 } from "@dnd-kit/core";
-import { closestCenter } from "@dnd-kit/core";
 
 const ImageGallery = () => {
   const [imageData, setImageData] = useState([
