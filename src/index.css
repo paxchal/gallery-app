@@ -182,10 +182,16 @@ h1 {
 }
 .gallery-image {
   width: 100%;
+  cursor: grab;
+}
+.gallery-item.dragging {
+  cursor: grabbing;
 }
 
-/* Style for the ghost image */
-/* Style for the ghost image */
+/* custom-cursor.css */
+.dragging {
+  cursor: grab; /* Change this to your desired custom cursor */
+}
 
 /*MEDIA QUERY*/
 

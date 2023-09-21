@@ -11,8 +11,6 @@ import { closestCenter } from "@dnd-kit/core";
 
 const ImageGallery = () => {
   const [imageData, setImageData] = useState([
-    // Your image data objects
-    // ...
     {
       id: "1",
 
@@ -153,14 +151,31 @@ const ImageGallery = () => {
 };
 
 const ImageItem = ({ imageInfo, index }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: index.toString(),
-    data: { index },
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: index.toString(),
+      data: { index },
+    });
 
   const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
     id: index.toString(),
   });
+
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (event) => {
+    if (isDragging) {
+      setCursorPosition({ x: event.clientX, y: event.clientY });
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isDragging]);
 
   return (
     <div
@@ -171,13 +186,25 @@ const ImageItem = ({ imageInfo, index }) => {
       {...attributes}
       {...listeners}
       style={{ transform }}
-      className={`gallery-item ${isOver ? "over" : ""}`}
+      className={`gallery-item ${isOver ? "over" : ""} ${
+        isDragging ? "dragging" : ""
+      }`}
     >
       <img
         className="gallery-image"
         src={imageInfo.urls.regular}
         alt={imageInfo.alt_description}
       />
+
+      {isDragging && (
+        <div
+          className="custom-cursor"
+          style={{
+            left: cursorPosition.x + "px",
+            top: cursorPosition.y + "px",
+          }}
+        ></div>
+      )}
     </div>
   );
 };
