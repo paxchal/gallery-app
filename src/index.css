@@ -212,9 +212,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
-  .image-gallery {
-    grid-template-columns: repeat(4, 1fr);
-  }
+
   .header-primary {
     font-size: 2rem;
   }
@@ -223,21 +221,13 @@ h1 {
 @media (max-width: 500px) {
   .gallery {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .image-gallery {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .center {
     padding: 0 3.4rem;
   }
 
-  .vertical-gallery {
-    display: flex;
-    flex-direction: column;
-    /* Add other styling as needed */
-  }
   .header-primary {
     font-size: 1.6rem;
   }
@@ -252,10 +242,7 @@ h1 {
 @media (max-width: 370px) {
   .gallery {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .image-gallery {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .header-primary {

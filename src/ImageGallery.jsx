@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   DndContext,
   PointerSensor,
+  TouchSensor, // Import TouchSensor
   useSensor,
   useSensors,
   useDraggable,
@@ -88,7 +89,10 @@ const ImageGallery = () => {
   const [searchInput, setSearchInput] = useState("");
   const [filteredData, setFilteredData] = useState(imageData);
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor) // Use TouchSensor for touch-based dragging
+  );
 
   const handleSearchInputChange = (event) => {
     const inputValue = event.target.value;
@@ -162,22 +166,23 @@ const ImageItem = ({ imageInfo, index }) => {
 
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = React.useCallback(
-    (event) => {
-      if (isDragging) {
-        setCursorPosition({ x: event.clientX, y: event.clientY });
-      }
-    },
-    [isDragging]
-  );
+  const handleMove = (event) => {
+    if (isDragging) {
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+      setCursorPosition({ x: clientX, y: clientY });
+    }
+  };
 
   React.useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("touchmove", handleMove); // Handle touch move
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("touchmove", handleMove); // Remove touch move listener
     };
-  }, [handleMouseMove]);
+  }, [handleMove, isDragging]);
 
   return (
     <div
