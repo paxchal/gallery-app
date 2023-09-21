@@ -7,11 +7,12 @@ import {
   useDraggable,
   useDroppable,
 } from "@dnd-kit/core";
+import { closestCenter } from "@dnd-kit/core";
 
 const ImageGallery = () => {
   const [imageData, setImageData] = useState([
     // Your image data objects
-
+    // ...
     {
       id: "1",
 
@@ -106,8 +107,8 @@ const ImageGallery = () => {
     const { active, over } = event;
 
     if (active && over) {
-      const oldIndex = active.id;
-      const newIndex = over.id;
+      const oldIndex = Number(active.id);
+      const newIndex = Number(over.id);
 
       const updatedImageData = [...filteredData];
       const [movedItem] = updatedImageData.splice(oldIndex, 1);
@@ -152,10 +153,10 @@ const ImageGallery = () => {
 };
 
 const ImageItem = ({ imageInfo, index }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: index.toString(),
-    });
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: index.toString(),
+    data: { index },
+  });
 
   const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
     id: index.toString(),
@@ -170,9 +171,7 @@ const ImageItem = ({ imageInfo, index }) => {
       {...attributes}
       {...listeners}
       style={{ transform }}
-      className={`gallery-item ${isDragging ? "dragging" : ""} ${
-        isOver ? "over" : ""
-      }`}
+      className={`gallery-item ${isOver ? "over" : ""}`}
     >
       <img
         className="gallery-image"
