@@ -3,7 +3,9 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const ImageGallery = () => {
   const [imageData] = useState([
-    // Example image data, you can add more image objects here
+    // Your image data here
+    // ...
+
     {
       id: "1",
 
@@ -91,15 +93,14 @@ const ImageGallery = () => {
       },
       alt_description: "people, woman, human",
     },
-    // Add more image objects as needed
   ]);
-  //const [loading, setLoading] = useState(false);  Loading state
-  const [searchInput, setSearchInput] = useState(""); // Search input
-  const [filteredData, setFilteredData] = useState(imageData); // Filtered images
 
-  // Handle drag-and-drop reordering
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredData, setFilteredData] = useState(imageData);
+  const [galleryPosition, setGalleryPosition] = useState({ x: 0, y: 0 });
+
   const onDragEnd = (result) => {
-    if (!result.destination) return; // Dropped outside the list
+    if (!result.destination) return;
 
     const reorderedImages = Array.from(filteredData);
     const [reorderedItem] = reorderedImages.splice(result.source.index, 1);
@@ -108,16 +109,22 @@ const ImageGallery = () => {
     setFilteredData(reorderedImages);
   };
 
-  // Handle search input change
   const handleSearchInputChange = (event) => {
     const inputValue = event.target.value;
     setSearchInput(inputValue);
 
-    // Filter images based on alt descriptions
     const filteredImages = imageData.filter((imageInfo) =>
       imageInfo.alt_description.toLowerCase().includes(inputValue.toLowerCase())
     );
     setFilteredData(filteredImages);
+  };
+
+  const handleDrag = (event) => {
+    // Update gallery position on drag
+    setGalleryPosition((prevPosition) => ({
+      x: prevPosition.x + event.movementX,
+      y: prevPosition.y + event.movementY,
+    }));
   };
 
   return (
@@ -134,7 +141,13 @@ const ImageGallery = () => {
         </div>
       </section>
 
-      <div className="section-gallery center">
+      <div
+        className="section-gallery center"
+        onDrag={handleDrag} // Handle gallery drag
+        style={{
+          transform: `translate(${galleryPosition.x}px, ${galleryPosition.y}px)`,
+        }}
+      >
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="image-gallery">
             {(provided) => (
