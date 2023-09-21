@@ -232,6 +232,9 @@ h1 {
   .header-primary {
     font-size: 1.6rem;
   }
+  .center {
+    padding: 0 2rem;
+  }
 }
 
 @media (max-width: 370px) {
@@ -243,9 +246,6 @@ h1 {
     grid-template-columns: repeat(1, 1fr);
   }
 
-  .center {
-    padding: 0 3rem;
-  }
   .header-primary {
     font-size: 1.4rem;
   }
