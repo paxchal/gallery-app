@@ -136,7 +136,7 @@ const ImageGallery = () => {
 
       <div className="section-gallery center">
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="image-gallery">
+          <Droppable droppableId="image-gallery" direction="vertical">
             {(provided) => (
               <div
                 ref={provided.innerRef}
