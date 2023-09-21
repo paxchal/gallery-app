@@ -131,7 +131,7 @@ const ImageGallery = () => {
           <Droppable
             droppableId="image-gallery"
             direction="horizontal"
-            className="image-gallery"
+            className="image-gallery vertical-gallery"
           >
             {(provided) => (
               <ul
