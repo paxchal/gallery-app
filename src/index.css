@@ -206,6 +206,9 @@ h1 {
   .image-gallery {
     grid-template-columns: repeat(4, 1fr);
   }
+  .header-primary {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 500px) {
@@ -226,6 +229,9 @@ h1 {
     flex-direction: column;
     /* Add other styling as needed */
   }
+  .header-primary {
+    font-size: 1.6rem;
+  }
 }
 
 @media (max-width: 370px) {
@@ -239,5 +245,8 @@ h1 {
 
   .center {
     padding: 0 3rem;
+  }
+  .header-primary {
+    font-size: 1.4rem;
   }
 }

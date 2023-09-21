@@ -14,7 +14,7 @@ function Home() {
   return (
     <div className="Home">
       <section className="section-header center">
-        <h1>My Gallery</h1>
+        <h1 className="header-primary">My Gallery</h1>
         <button onClick={handleClick} className="sign-out-btn">
           Sign out
         </button>
